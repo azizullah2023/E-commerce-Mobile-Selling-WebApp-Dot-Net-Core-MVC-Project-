@@ -1,0 +1,202 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+html,
+body,
+.intro {
+    height: 100%;
+}
+
+table td,
+table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+thead th {
+    color: #fff;
+}
+
+.card {
+    border-radius: .5rem;
+}
+
+.table-scroll {
+    border-radius: .5rem;
+}
+
+    .table-scroll table thead th {
+        font-size: 1.25rem;
+    }
+
+thead {
+    top: 0;
+    position: sticky;
+}
+
+.bluish-gradient-button {
+    background-image: linear-gradient(to right, #007bff, #00bcd4);
+    color: #fff;
+    border: none;
+}
+
+    /* .bluish-gradient-button:hover {
+        background-image: linear-gradient(to right, #00bcd4, #007bff);
+    }*/
+
+    .bluish-gradient-button:hover {
+        background-image: linear-gradient(to right, #00bcd4, #007bff);
+        color: #fff;
+    }
+
+.search-box {
+    width: 300px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .search-box input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        outline: none;
+        border-radius: 20px;
+        font-size: 16px;
+    }
+
+    .search-box button {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 0 20px 20px 0;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .search-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .search-box button i {
+            font-size: 20px;
+        }
+
+.page-link {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+    .page-link:hover {
+        background-color: #45a049; /* Darker Green */
+    }
+
+    .page-link:active {
+        background-color: #367936; /* Active Green */
+    }
+body {
+    background-image: url('https://source.unsplash.com/1600x900/?mountain');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    color: #fff;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.form-container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.form-control {
+    position: relative;
+}
+
+    .form-control::placeholder {
+        color: #aab7c4;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        opacity: 1;
+    }
+
+    .form-control:focus::placeholder {
+        transform: translateY(-150%);
+        font-size: 12px;
+        opacity: 1;
+    }
+
+    .form-control:focus {
+        z-index: 1;
+    }
+@media (min-width: 1025px) {
+    .h-custom {
+        height: 100vh !important;
+    }
+}
+
+.liked {
+    color: #ff4d4d !important; /* Vibrant red color */
+    transition: color 0.3s ease, transform 0.1s ease;
+    text-shadow: 0 0 10px rgba(255, 77, 77, 0.5); /* Add glow effect */
+}
+
+    .liked:active {
+        animation: growShrink 0.2s ease;
+    }
+
+@keyframes growShrink {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+.liking {
+    color: #6c757d !important; /* Dark gray color */
+}
+

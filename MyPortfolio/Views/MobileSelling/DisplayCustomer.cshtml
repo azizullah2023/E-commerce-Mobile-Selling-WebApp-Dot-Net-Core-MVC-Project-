@@ -1,0 +1,226 @@
+﻿
+ @model MyPortfolio.Models.ViewModels.ViewModel1
+ @using MyPortfolio.Models.ViewModels
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- MDB CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.7.0/mdb.min.css" rel="stylesheet">
+    <style>
+        .gradient-custom {
+            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+        }
+
+        .pay-online-button {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 18px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            background: linear-gradient(to right, #4a90e2, #3542ab);
+            color: white;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+            .pay-online-button:hover {
+                background: linear-gradient(to right, #3b7bd9, #2b368b);
+            }
+
+            .pay-online-button:active {
+                background: linear-gradient(to right, #2b368b, #3b7bd9);
+            }
+
+           
+</style>
+    </style>
+</head>
+
+<body>
+
+    <section class="h-100 gradient-custom">
+        @{
+            // Retrieve TempData and cast it to ViewModel1
+            var viewModel = TempData.Peek("ViewModel") as ViewModel1;
+        }
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center my-4">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <h1 class="mb-0">Purchase Mobile</h1>
+                        </div>
+                        <div class="card-body">
+                            
+                            @foreach (var item in Model.MobileSellIt)
+                            {
+                                <div class="row" data-item-id="@item.Id">
+                                    <div class="row" data-item-id="@item.Id">
+                                        <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                            <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                                                <img src="@item.ImageURL" class="w-100" alt="Product Image" />
+                                                <a href="#!">
+                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                            <p><strong>@item.Brand.brand</strong></p>
+                                            <p>Mobile Model: @item.Brand.MobileModel</p>
+                                            <p>Phone Number: @item.PhoneNumber</p>
+                                            <p>Accessories: @Html.Raw(item.TAAccessories)</p>
+                                            <p>Condition: @Html.Raw(item.TAConditionalDetail)</p>
+                                 <div class="d-flex align-items-center mb-2">
+                                            <form id="likeForm-@item.Id" method="post" asp-controller="MobileSelling" asp-action="TogglesLike" >
+                                                <input type="hidden" name="itemID" value="@item.Id" />
+                                                @Html.AntiForgeryToken()  <!-- Ensure security with anti-forgery token -->
+                                                <button type="submit" class="btn btn-lg mb-2" title="Move to the wish list">
+                                                        <div style="display: flex; flex-direction: column; align-items: center;">
+                                                            @{
+
+                                                                var likedrow = Model.rowsnumbr.Where(u => u.ItemId == item.Id).FirstOrDefault();
+                                                                if (likedrow != null)
+                                                                {
+                                                                    <i class="bi bi-heart-fill @(likedrow.Like==1? "liked" : "liking")" style=" font-size: 24px;"></i>
+
+                                                                }
+                                                                else
+                                                                
+                                                                {
+                                                                    <i class="bi bi-heart-fill liking" style="font-size: 24px;"></i>
+                                                                }
+                                                            }
+                                                           
+                                                            
+                                                                                                    @if (Model.rowsnumbr!=null)
+                                                            {
+                                                                var count = Model.rowsnumbr.Where(u => u.ItemId == item.Id).Count();
+                                                                Model.CountLikes = count.ToString();
+                                                                                                    <strong class="text-dark">@Model.CountLikes</strong>
+
+                                                            }
+                                                                                   
+                                                        </div>
+                                                </button>
+                                                   
+                                            </form>
+                                            <button type="button" class="btn btn-lg mb-2 comment-button" title="Comment">
+                                                <i class="bi bi-chat" style="color:black"></i>
+                                            </button>
+                                            <a type="button" class="btn btn-danger  btn-sm me-1 mb-2" asp-controller="MobileSelling" asp-action="DeleteMobile" asp-route-id="@item.Id" title="Remove item">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                            <div class="d-flex mb-4" style="max-width: 300px">
+                                                <a class="btn btn-success bg-gradient form-control" asp-route-id="@item.Id" asp-controller="MobileSelling" asp-action="UpdateMobile">Update</a>
+                                            </div>
+                                            <p class="text-start text-md-center">
+                                                <strong>@item.Price.ToString("c")</strong>
+                                            </p>
+                                            <br /><br />
+                                            <a asp-controller="Home" asp-action="Payment" asp-route-Id="@item.Id" class="pay-online-button">Pay Online</a>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-info bg-gradient toggle-comments-btn" data-target="@($"#commentsSection_{item.Id}")">Show Comments</button>
+                                    
+                                    <div class="commentsSection" id="commentsSection_@item.Id" style="display:none;">
+                                        @{
+                                            int counter = 1;
+                                        }
+                                        @foreach (var cmt in Model.Comment.Where(u => u.MobileSellingID == item.Id))
+                                        {
+                                           
+                                            <div class="container mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="comment-header d-flex align-items-center">
+                                                            <span class="comment-label"><h5>Comment :</h5></span>
+                                                            <h1 class="comment-number text-secondary">@counter</h1>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <label class="form-label mb-1 border-4 text-end">@cmt.CraetedAt</label>
+                                                        <p class="fs-5">@cmt.ComntConetent</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            counter++;
+                                            <hr class="my-4" />
+                                        }
+                                    </div>
+                                    <hr class="my-4" />
+
+                                    <!-- Comment form here -->
+                                    <form asp-controller="MobileSelling" asp-action="Comment" method="post">
+                                        <div id="commentContainer_@item.Id" style="display:none;">
+                                            <input type="hidden" name="Id" value="@item.Id" />
+                                            <textarea id="commentTextarea_@item.Id" name="Cmnt" placeholder="Type Your Comment here" class="form-control border-3" rows="3"></textarea>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+
+
+
+                         </div>
+                       
+                                                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var commentButtons = document.querySelectorAll('.comment-button');
+            commentButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var itemId = this.closest('[data-item-id]').getAttribute('data-item-id');
+                    var commentContainer = document.getElementById('commentContainer_' + itemId);
+                    commentContainer.style.display = commentContainer.style.display === 'none' ? 'block' : 'none';
+                });
+            });
+
+            var submitButtons = document.querySelectorAll('button[type="submit"]');
+            submitButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    var itemId = this.closest('[data-item-id]').getAttribute('data-item-id');
+                    var commentTextarea = document.getElementById('commentTextarea_' + itemId);
+                    var comment = commentTextarea.value.trim();
+
+                    // if (comment === '') {
+                    //     event.preventDefault();
+                    //     alert('Please enter a comment.');
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MDB JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.7.0/mdb.min.js"></script>
+</body>
+
+</html>

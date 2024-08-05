@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@model PagedList.IPagedList<MyPortfolio.Models.Brand>
+
+
+<div class="row align-items-center">
+    <div class="col-md-6 text-black-50 text-center">
+        <h2 class="display-5 fw-bold">
+            Brand Information
+        </h2>
+    </div>
+    <div class="col-md-3 text-center">
+        <a class="bluish-gradient-button form-control text-center fw-bold" asp-action="Insert" style="text-decoration:none;">
+            <i class="bi bi-plus-circle-fill"></i> Create New
+        </a>
+    </div>
+   
+    <div class="col-md-3">
+        <form asp-controller="Home" asp-action="Index" method="get">
+        <div class="search-box d-flex">
+            <input type="text" class="form-control" name="searchQuery" placeholder="Search..." />
+            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+        </div>
+    </form>
+</div>
+
+</div>
+
+<section class="intro">
+   
+  <div class="bg-image h-100" style="background-color: #f5f7fa;">
+    <div class="mask d-flex align-items-center h-100">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body p-0">
+                <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative; height: 700px">
+                  <table class="table table-striped mb-0">
+                    <thead style="background-color: #002d72;">
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">MobileModel</th>
+                        <th scope="col">UsedYears</th>
+                                                <th scope="col">Actions</th>
+                                              
+                      </tr>
+                    </thead>
+                    <tbody>
+                                            @foreach (var item in Model.OrderBy(x => x.Id))
+                                            {
+
+                                                <tr>
+                                                    <td>@item.Id</td>
+                                                    <td>@item.brand</td>
+                                                    <td>@item.MobileModel</td>
+                                                    <td>@item.UsedYears</td>
+                                                    <td>
+                                                        <a asp-route-id="@item.Id" asp-action="Edit">
+                                                        <i class="bi bi-pencil-square text-warning btn" ></i>
+                                                        </a>
+                                                        <a asp-route-id="@item.Id" asp-action="Delete">
+                                                        <i class="bi bi-trash3 text-danger btn"></i>
+                                                        </a>
+                                                    </td>
+                                                   
+
+                                               </tr>
+                                       }
+            
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- Your existing HTML code -->
+<!-- Pagination -->
+<div class="row pt-3 mt-3">
+    <div class="col-6  pt-3 mt-3"></div>
+    <div class="col-6  pt-3 mt-3 text-end">
+        <div class=" justify-content-center">
+            <div class="">
+                @if (Model.Any())
+                {
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            @if (ViewBag.HasPreviousPage != null && (bool)ViewBag.HasPreviousPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageNumber - 1 })">Previous</a>
+                                </li>
+                            }
+
+                            @foreach (var i in Enumerable.Range(1, ViewBag.TotalPages ?? 1))
+                            {
+                                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                                </li>
+                            }
+                            @if (ViewBag.HasNextPage)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageNumber + 1 })">Next</a>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

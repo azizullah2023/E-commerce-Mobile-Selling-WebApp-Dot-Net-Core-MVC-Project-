@@ -1,0 +1,78 @@
+﻿@model FormMobileSellIt
+
+<form asp-controller="MobileSelling" asp-action="DeleteMobile" method="post" enctype="multipart/form-data">
+    <input asp-for="Id" hidden />
+    <input asp-for="ImageURL" hidden />
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="form-container">
+                    <h2 class="text-center mb-4">Delete Mobile</h2>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label">Full Name:</label>
+                        <input readonly asp-for="FullName" class="form-control" placeholder="Enter your Full Name" required>
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="BrandId" class="form-label">Brand:</label>
+                        <select asp-for="BrandId" asp-items="ViewBag.Brandfromdb" class="form-select" required>
+                            <option value="" selected disabled>__Select Brand__</option>
+                        </select>
+                        <span asp-validation-for="BrandId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="TAConditionalDetail" class="form-label">TA Conditional Detail:</label>
+<textarea asp-for="TAConditionalDetail" readonly class="form-control" rows="3" placeholder="Enter TA Conditional Detail" id="TAConditionalDetail" name="TAConditionalDetail"></textarea>
+
+                        <span asp-validation-for="TAConditionalDetail" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label">Price:</label>
+                        <input readonly asp-for="Price" class="form-control" placeholder="Enter Price" required>
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PhoneNumber" class="form-label">Phone Number:</label>
+                        <input readonly asp-for="PhoneNumber" class="form-control" placeholder="Enter Phone Number" required>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="EmailAddress" class="form-label">Email Address:</label>
+                        <input readonly asp-for="EmailAddress" class="form-control" placeholder="Enter Email Address" required>
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+
+                  
+
+                    <div class="mb-3">
+                        <label asp-for="TAAccessories" class="form-label">TA Accessories:</label>
+                        <textarea readonly asp-for="TAAccessories" class="form-control" rows="3" placeholder="Enter TA Accessories" id="TAAccessories" name="TAAccessories"></textarea>
+                        <span asp-validation-for="TAAccessories" class="text-danger"></span>
+                    </div>
+
+                    @* <button class="btn btn-primary bg-gradient" type="submit">Submit</button> *@
+                    @* <a asp-action="Index" class="btn btn-primary bg-gradient">Submit</a> *@
+                    <button class="btn btn-danger bg-gradient form-control" type="submit">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker markdown',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
+}
